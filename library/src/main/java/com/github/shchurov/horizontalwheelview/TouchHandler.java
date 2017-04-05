@@ -1,8 +1,5 @@
 package com.github.shchurov.horizontalwheelview;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.ValueAnimator;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.animation.DecelerateInterpolator;
@@ -23,7 +20,7 @@ class TouchHandler extends GestureDetector.SimpleOnGestureListener {
     private HorizontalWheelView view;
     private HorizontalWheelView.Listener listener;
     private GestureDetector gestureDetector;
-    private ValueAnimator settlingAnimator;
+    private ValueAnimatorCompat settlingAnimator;
     private boolean snapToMarks;
     private int scrollState = SCROLL_STATE_IDLE;
 
@@ -99,8 +96,9 @@ class TouchHandler extends GestureDetector.SimpleOnGestureListener {
     private void playSettlingAnimation(double endAngle) {
         updateScrollStateIfRequired(SCROLL_STATE_SETTLING);
         double startAngle = view.getRadiansAngle();
+
         int duration = (int) (Math.abs(startAngle - endAngle) * SETTLING_DURATION_MULTIPLIER);
-        settlingAnimator = ValueAnimator.ofFloat((float) startAngle, (float) endAngle)
+        settlingAnimator = ValueAnimatorCompat.ofFloat((float) startAngle, (float) endAngle)
                 .setDuration(duration);
         settlingAnimator.setInterpolator(INTERPOLATOR);
         settlingAnimator.addUpdateListener(flingAnimatorListener);
@@ -108,16 +106,16 @@ class TouchHandler extends GestureDetector.SimpleOnGestureListener {
         settlingAnimator.start();
     }
 
-    private ValueAnimator.AnimatorUpdateListener flingAnimatorListener = new ValueAnimator.AnimatorUpdateListener() {
+    private ValueAnimatorCompat.AnimatorUpdateListenerCompat flingAnimatorListener = new ValueAnimatorCompat.AnimatorUpdateListenerCompat() {
         @Override
-        public void onAnimationUpdate(ValueAnimator animation) {
+        public void onAnimationUpdate(ValueAnimatorCompat animation) {
             view.setRadiansAngle((float) animation.getAnimatedValue());
         }
     };
 
-    private Animator.AnimatorListener animatorListener = new AnimatorListenerAdapter() {
+    private ValueAnimatorCompat.AnimatorListenerCompat animatorListener = new ValueAnimatorCompat.AnimatorListenerCompat() {
         @Override
-        public void onAnimationEnd(Animator animation) {
+        public void onAnimationEnd() {
             updateScrollStateIfRequired(SCROLL_STATE_IDLE);
         }
     };

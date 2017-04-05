@@ -8,7 +8,7 @@ android {
     buildToolsVersion "25.0.0"
 
     defaultConfig {
-        minSdkVersion 14
+        minSdkVersion 9
         targetSdkVersion 25
         versionCode 5
         versionName "0.9.4"
@@ -24,4 +24,7 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
+
+    //add support for Android < 11+
+    compile 'com.nineoldandroids:library:2.4.0+'
 }
