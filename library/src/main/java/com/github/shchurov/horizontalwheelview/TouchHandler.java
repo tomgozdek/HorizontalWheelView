@@ -74,7 +74,7 @@ class TouchHandler extends GestureDetector.SimpleOnGestureListener {
     private void updateScrollStateIfRequired(int newState) {
         if (listener != null && scrollState != newState) {
             scrollState = newState;
-            listener.onScrollStateChanged(newState);
+            listener.onScrollStateChanged(view, newState);
         }
     }
 

@@ -73,7 +73,7 @@ public class HorizontalWheelView extends View {
         }
         invalidate();
         if (listener != null) {
-            listener.onRotationChanged(this.angle);
+            listener.onRotationChanged(this, this.angle);
         }
     }
 
@@ -206,12 +206,10 @@ public class HorizontalWheelView extends View {
         return drawer.getMarksCount();
     }
 
-    public static class Listener {
-        public void onRotationChanged(double radians) {
-        }
+    public interface Listener {
+        void onRotationChanged(View view, double radians);
 
-        public void onScrollStateChanged(int state) {
-        }
+        void onScrollStateChanged(View view, int state);
     }
 
 }
